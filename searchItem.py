@@ -1,18 +1,20 @@
 import time
 import unittest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from pageIndex import PageIndex
 from pageItems import PageItems
 
 class SearchCases(unittest.TestCase):
 
     def setUp(self):
+        option = Options()
+        option.add_argument("--headless")
         self.driver_service = Service(executable_path='C:/WebDriver/chromedriver.exe')
-        self.driver = webdriver.Chrome(service=self.driver_service)
+        self.driver = webdriver.Chrome(service=self.driver_service, options=option)
         self.driver.get('http://automationpractice.com/index.php')
+        self.driver.implicitly_wait(5)
         self.indexPage = PageIndex(self.driver)
         self.itemsPage = PageItems(self.driver)
 
